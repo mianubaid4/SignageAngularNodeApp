@@ -1,0 +1,197 @@
+<header>
+  <div class="header-container">
+    <a href="javascript: void(0);" class="logo"> Signage </a>
+    <div class="nav-menu">
+
+    </div>
+  </div>
+</header>
+
+<div class="sigma-editor-area" cdkDropListGroup> 
+  <aside>
+    <div class="sm-side">
+      <a
+        href="javascript: void(0);"
+        [ngClass]="{ active: activeSection == 'Templates' }"
+        (click)="activeSection = 'Templates'"
+      >
+        <img src="/assets/images/templates.svg" />
+        <span>Templates</span>
+      </a>
+      <a
+        href="javascript: void(0);"
+        [ngClass]="{ active: activeSection == 'Uploads' }"
+        (click)="activeSection = 'Uploads'"
+      >
+        <img src="/assets/images/add.svg" />
+        <span>Uploads</span>
+      </a>
+    </div>
+    <div class="open-side">
+      <div class="inside-selective-area">
+        <div class="selective-area-section">
+          <label>All results</label>
+          <div class="listing-imgs" *ngIf="activeSection == 'Templates'">
+            <img
+              src="/assets/images/TemplateOne.png"
+              (click)="seletedTemplate(1)"
+            />
+            <img
+              src="/assets/images/TemplateTwo.png"
+              (click)="seletedTemplate(2)"
+            />
+            <img
+              src="/assets/images/TemplateThree.png"
+              (click)="seletedTemplate(3)"
+            />
+            <img
+              src="/assets/images/TemplateFour.png"
+              (click)="seletedTemplate(4)"
+            />
+            <img
+              src="/assets/images/TemplateFive.png"
+              (click)="seletedTemplate(5)"
+            />
+            <img
+              src="/assets/images/TemplateSix.png"
+              (click)="seletedTemplate(6)"
+            />
+          </div>
+        </div>
+        <div class="selective-area-section" *ngIf="activeSection == 'Uploads'">
+          <div class="upload-listing">
+            <div class="listing-imgs">
+              <div
+                *ngFor="let pic of pictures; let i = index"
+                pDraggable="pic"
+                (onDragStart)="dragStart($event, pic, i, 'pic')"
+              >
+                <img [src]="pic" width="400" />
+              </div>
+            </div>
+            <div
+              class="drag-area"
+              mat-stroked-button
+              type="button"
+              (click)="filePicker.click()"
+            >
+              Drag media hera to uplaod or click to upload
+            </div>
+            <input
+              type="file"
+              style="display: none"
+              multiple
+              #filePicker
+              (change)="imagePicker($event)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="perform-area">
+    <div class="editor-header">
+      <div class="editor-fix">
+        {{ "Background color" }}
+
+        <p-colorPicker class="pointer"
+          [(ngModel)]="defaultColor"
+          (onChange)="setColor($event.value)"
+          title="Background Color"
+        >
+        </p-colorPicker>
+      </div>
+      <button type="button" class="btn outline-btn " (click)="addText()">
+        Add Text
+      </button>
+
+      <button
+        type="button"
+        style="margin-left: 200px; background-color: #395b64; color: white"
+        (click)="adjustSpace('-')"
+      >
+        -</button
+      ><span>{{ showSpaces }}</span>
+      <button
+        style="margin-right: 300px; background-color: #395b64; color: white"
+        (click)="adjustSpace('+')"
+      >
+        +
+      </button>
+
+      <button type="button" class="btn outline-btn" (click)="generateImage()">
+        <img src="/assets/images/download.svg" />
+        Download
+      </button>
+    </div>
+    <div class="editor-area">
+      <div class="example-boundary" [style]="layoutHeightWidht">
+        <div id="image-section">
+          <mat-grid-list
+            [cols]="gridCol"
+            [rowHeight]="heigthOfRow"
+            [style]="canvasBackGroundColor"
+            [gutterSize]="spaces"
+          >
+            <mat-grid-tile
+              *ngFor="let tile of droped; let i = index"
+              [colspan]="tile.cols"
+              [rowspan]="tile.rows"
+              pDroppable="tile"
+              (drop)="drop($event, i)"
+            >
+              <ng-container *ngIf="tile.type == 'both'" class="TextOverImage">
+                <img
+                  [style]="tile.style"
+                  [ngClass]="{ activeCell: imageIndex == i }"
+                  style="background-size: cover"
+                  [src]="tile.data"
+                  (click)="selectIndex('both', i, tile.data)"
+                  alt="Insert Image or Text"
+                />
+                <p
+                  class="centered"
+                  [ngClass]="{ activeCell: inputIndex == i && tile.text != '' }"
+                  (click)="selectIndex('both', i, tile.text)"
+                  [innerHTML]="tile.text | noSanitize"
+                  ngDraggable
+                ></p>
+              </ng-container>
+
+              <img
+                [style]="tile.style"
+                style="background-size: cover"
+                [ngClass]="{ activeCell: imageIndex == i }"
+                *ngIf="tile.type == 'image'"
+                [src]="tile.data"
+                (click)="selectIndex('image', i)"
+                alt="Insert Image or Text"
+              />
+              <p
+                *ngIf="tile.type == 'text'"
+                [ngClass]="{ activeCell: inputIndex == i }"
+                (click)="selectIndex('text', i, tile.data)"
+                [innerHTML]="tile.data | noSanitize"
+                ngDraggable
+              ></p>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </div>
+
+      <p-dialog
+        header="Edit Text"
+        [(visible)]="openEditor"
+        [maximizable]="true"
+        [draggable]="true"
+        [resizable]="true"
+      >
+        <p-editor
+          [(ngModel)]="EditorData"
+          [style]="{ height: '100px' }"
+          (onTextChange)="editorText($event)"
+        ></p-editor>
+      </p-dialog>
+    </div>
+  </div>
+</div>

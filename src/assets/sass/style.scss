@@ -1,0 +1,72 @@
+//
+// Theme style
+//
+
+// Mode
+$mode: default;
+
+// Initialize
+@import "init";
+
+// Components
+@import "./core/components/components";
+@import "components/components";
+
+// Layout
+@import "layout/layout";
+
+// Angular vendors
+@import "~socicon/css/socicon.css";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~line-awesome/dist/line-awesome/css/line-awesome.css";
+@import "~prism-themes/themes/prism-shades-of-purple.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "~animate.css/animate.css";
+@import "./core/vendors/plugins/prismjs";
+@import "./core/vendors/plugins/formvalidation";
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+$primaryColor : #395b64;
+$DarkColor : #2c3333;
+$secondaryColor : #a5c9ca;
+$lightColor : #e7f6f2;
+$blackColor: #000000;
+$whiteColor: #ffffff;
+
+.logo-dark {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.6rem;
+    color: $DarkColor;
+
+    &:hover {
+      color: $DarkColor;
+    }
+}
+
+.logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.6rem;
+    color: $whiteColor;
+
+    &:hover {
+      color: $whiteColor;
+    }
+}
+
+.auth-bg {
+  background: $lightColor;
+  min-height: 100vh;
+}
+
+.btn {
+  opacity: 1 !important;
+}
+
+.link-secondary {
+  color: $secondaryColor;
+
+  &:hover {
+    color: $secondaryColor;
+  }
+}

@@ -1,0 +1,17 @@
+<div class="card-body py-4 px-4">
+  <div class="d-flex flex-stack">
+    <span class="card-title fw-bolder text-muted text-hover-primary fs-1">
+      {{ title }}
+    </span>
+
+    <span [inlineSVG]="svgIcon" class="svg-icon svg-icon-5x"
+        [ngClass]="'svg-icon-' + iconColor"></span>
+
+  </div>
+
+  <div class="p-2" [ngClass]="'bg-' + color">
+    <p class="fw-bold fs-4 m-0 text-inverse-danger">
+      {{description}}
+    </p>
+  </div>
+</div>

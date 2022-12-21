@@ -1,0 +1,22 @@
+<div class="card-body py-4">
+  <div class="row">
+    <div class="col-xl-3">
+      <span [inlineSVG]="svgIcon" class="svg-icon svg-icon-2x svg-icon-3x ms-n1"
+        [ngClass]="'svg-icon-' + iconColor"></span>
+      <span class="symbol symbol-50px" [ngClass]="'symbol-light-' + color + ' me-2'">
+        <span class="symbol-label">
+          <span [inlineSVG]="svgIcon" class="svg-icon svg-icon-2x" [ngClass]="'svg-icon-' + color"></span>
+        </span>
+      </span>
+    </div>
+    <div class="col-xl-9">
+      <div [ngClass]="'text-inverse-' + color" class="fw-bolder fs-2 mb-2 text-end">
+        {{ title }}
+      </div>
+
+      <div class="fw-bold text-end" [ngClass]="'text-inverse-' + color + ' fs-7'">
+        {{ description }}
+      </div>
+    </div>
+  </div>
+</div>
